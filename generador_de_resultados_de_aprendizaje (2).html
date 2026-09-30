@@ -684,18 +684,16 @@
         }
 
         function setCheckState(element, isValid, text) {
-            const icon = element.querySelector('i');
-            const span = element.querySelector('span');
-            span.textContent = text;
-
-            if (isValid) {
-                element.className = 'flex items-start gap-2 text-emerald-600 font-medium';
-                icon.setAttribute('data-lucide', 'check-circle-2');
-            } else {
-                element.className = 'flex items-start gap-2 text-slate-400';
-                icon.setAttribute('data-lucide', 'circle');
+            if (!element) return;
+            const iconName = isValid ? 'check-circle-2' : 'circle';
+            const colorClass = isValid ? 'text-emerald-600 font-medium' : 'text-slate-400';
+            
+            element.className = `flex items-start gap-2 ${colorClass}`;
+            element.innerHTML = `<i data-lucide="${iconName}" class="w-4 h-4 shrink-0 mt-0.5"></i><span>${text}</span>`;
+            
+            if (window.lucide && typeof lucide.createIcons === 'function') {
+                lucide.createIcons();
             }
-            lucide.createIcons();
         }
 
         function copyToClipboard() {
